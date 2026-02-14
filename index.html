@@ -1,34 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCC Visitor Count</title>
 
----
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
 
-## 🔄 How the Data Updates
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-A Power Automate flow:
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #0078d4;
+    }
 
-1. Watches for incoming Power BI subscription emails  
-2. Extracts:
-   - **Total PAX**
-   - **Last Refresh Time (HST)**
-3. Writes the values into a JSON file stored in OneDrive  
-4. The webpage fetches this JSON file and displays the latest numbers  
+    .count {
+      font-size: 80px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #222;
+    }
 
----
+    .label {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #555;
+    }
 
-## 🌐 Deployment
+    .timestamp {
+      font-size: 16px;
+      margin-top: 5px;
+      color: #777;
+    }
 
-This site is deployed using **Vercel**, which provides:
+    .footer {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
 
-- Fast global CDN  
-- Automatic redeploys when the repo updates  
-- A clean public URL accessible to anyone  
+<body>
 
-To redeploy, simply push changes to the repository.
+  <div class="container">
+    <h1>PCC Visitor Count</h1>
 
----
+    <div id="count" class="count">--</div>
 
-## 🔧 Configuration
+    <div class="label">Last Refresh Time (HST)</div>
+    <div id="time" class="timestamp">--</div>
 
-Inside `index.html`, update the JSON URL here:
+    <div class="footer">Auto‑refreshing every 30 seconds</div>
+  </div>
 
-```javascript
-fetch("YOUR-JSON-FILE-URL-HERE" + "?cache=" + Date.now())
+  <script>
+    async function loadData() {
+      try {
+        const response = await fetch("YOUR-JSON-FILE-URL-HERE" + "?cache=" + Date.now());
+        const data = await response.json();
+
+        document.getElementById("count").textContent = data.totalPax;
+        document.getElementById("time").textContent = data.lastRefreshTime;
+      } catch (error) {
+        document.getElementById("count").textContent = "Error";
+        document.getElementById("time").textContent = "Unable to load data";
+      }
+    }
+
+    // Load immediately
+    loadData();
+
+    // Auto-refresh every 30 seconds
+    setInterval(loadData, 30000);
+  </script>
+
+</body>
+</html>
