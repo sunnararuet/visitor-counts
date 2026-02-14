@@ -73,7 +73,7 @@
   <script>
     async function loadData() {
       try {
-        const response = await fetch("https://raw.githubusercontent.com/sunnararuet/visitor-counts/refs/heads/main/visitorCount.json" + "?cache=" + Date.now());
+        const response = await fetch("https://raw.githubusercontent.com/sunnararuet/visitor-counts/main/visitorCount.json" + "?cache=" + Date.now());
         const data = await response.json();
 
         document.getElementById("count").textContent = data.totalPax;
