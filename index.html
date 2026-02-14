@@ -73,7 +73,7 @@
   <script>
     async function loadData() {
       try {
-        const response = await fetch("https://polynesianculturalcenter-my.sharepoint.com/:u:/g/personal/ruets_polynesia_com/IQCJwD4IxNAHQLkruxhBV6n5AZgvybViome5czdmJpudUKs?e=HhYbcF" + "?cache=" + Date.now());
+        const response = await fetch("https://raw.githubusercontent.com/sunnararuet/visitor-counts/refs/heads/main/visitorCount.json" + "?cache=" + Date.now());
         const data = await response.json();
 
         document.getElementById("count").textContent = data.totalPax;
