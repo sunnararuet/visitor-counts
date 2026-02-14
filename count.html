@@ -1,0 +1,34 @@
+
+---
+
+## 🔄 How the Data Updates
+
+A Power Automate flow:
+
+1. Watches for incoming Power BI subscription emails  
+2. Extracts:
+   - **Total PAX**
+   - **Last Refresh Time (HST)**
+3. Writes the values into a JSON file stored in OneDrive  
+4. The webpage fetches this JSON file and displays the latest numbers  
+
+---
+
+## 🌐 Deployment
+
+This site is deployed using **Vercel**, which provides:
+
+- Fast global CDN  
+- Automatic redeploys when the repo updates  
+- A clean public URL accessible to anyone  
+
+To redeploy, simply push changes to the repository.
+
+---
+
+## 🔧 Configuration
+
+Inside `index.html`, update the JSON URL here:
+
+```javascript
+fetch("YOUR-JSON-FILE-URL-HERE" + "?cache=" + Date.now())
